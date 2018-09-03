@@ -1,5 +1,5 @@
 
-
+# TODO - Next add tests for constraints on columns, then boxes.
 
 
 #input = '167523849984176523325489671798315264642798135531642798476831952213957486859264317'
@@ -42,12 +42,12 @@ def Alldiff(in_list):
 
 def MeetsAllContraints(sudoku_board):
     #check that all rows and all columns are different
-    rowa = ReturnRow(sudoku_board, 'A')
-    if (Alldiff(rowa) == False):
-        return False
-    rowb = ReturnRow(sudoku_board, 'B')
-    if Alldiff(rowb) == False:
-        return False
+    rows = 'ABCDEFGHI'
+    for x in range (0,8):
+        rowy = ReturnRow(sudoku_board, rows[x])
+        if Alldiff(rowy) == False:
+            return False
+    # now check all columns
     return True
 
 #def PrintBoard(sudoku_board):
