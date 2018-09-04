@@ -1,5 +1,6 @@
 
 # TODO - Next add tests for constraints on columns, then boxes.
+# TODO - Need function to get all values from squares into a list
 
 
 #input = '167523849984176523325489671798315264642798135531642798476831952213957486859264317'
@@ -48,6 +49,14 @@ def MeetsAllContraints(sudoku_board):
         if Alldiff(rowy) == False:
             return False
     # now check all columns
+    for z in range (1,9):
+        col1 = ReturnColumn(sudoku_board, str(z))
+        if Alldiff(col1) == False:
+            return False
+    return SquaresMeetConstraints(sudoku_board)
+
+
+def SquaresMeetConstraints(sudoku_board):
     return True
 
 #def PrintBoard(sudoku_board):
