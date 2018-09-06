@@ -83,7 +83,37 @@ print(ReturnSquare(board2, "G3"))
 
 #print(FindEmptySquares(board2))
 
+def ReturnSquare(board, key):
+    if key in square1_keys:
+        return SquareValues(board, square1_keys)
+    elif key in square2_keys:
+        return SquareValues(board, square2_keys)
+    elif key in square3_keys:
+        return SquareValues(board, square3_keys)
+    elif key in square4_keys:
+        return SquareValues(board, square4_keys)
+    elif key in square5_keys:
+        return SquareValues(board, square5_keys)
+    elif key in square6_keys:
+        return SquareValues(board, square6_keys)
+    elif key in square7_keys:
+        return SquareValues(board, square7_keys)
+    elif key in square8_keys:
+        return SquareValues(board, square8_keys)
+    elif key in square9_keys:
+        return SquareValues(board, square9_keys)
 
+    def SquareValues(board, key_list):
+        value_list = []
+        for key in key_list:
+            value_list.append(board[key])
+        return value_list
+
+    def ReturnSquareValues(board, key_list):
+        value_list = []
+        for key in key_list:
+            value_list.append(board[key])
+        return value_list
 
 
 

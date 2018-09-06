@@ -37,7 +37,7 @@ def Alldiff(in_list):
     unique = set(in_list)
     for each in unique:
         count = in_list.count(each)
-        if count > 1:
+        if count > 1 and each != '0':
           return False
     return True
 
@@ -57,7 +57,10 @@ def MeetsAllContraints(sudoku_board):
 
 
 def SquaresMeetConstraints(sudoku_board):
-    return True
+   values_square1 = ReturnSquare(sudoku_board, square1_keys)
+   if Alldiff(values_square1) == False:
+       return False
+   return True
 
 #def PrintBoard(sudoku_board):
  #   for key in sorted(sudoku_board.iteritems(), key=lambda (k,v): (v,k)):
@@ -88,37 +91,9 @@ def ReturnColumn(board, num):
     col = {k: v for k, v in board.items() if k.endswith(num)}
     return list(col.values())
 
-def ReturnSquareValues(board, key_list):
-    value_list = []
-    for key in key_list:
-        value_list.append(board[key])
-    return value_list
-
-def SquareValues(board, key_list):
-    value_list = []
-    for key in key_list:
-        value_list.append(board[key])
-    return value_list
-
-def ReturnSquare(board, key):
-    if key in square1_keys:
-        return SquareValues(board, square1_keys)
-    elif key in square2_keys:
-        return SquareValues(board, square2_keys)
-    elif key in square3_keys:
-        return SquareValues(board, square3_keys)
-    elif key in square4_keys:
-        return SquareValues(board, square4_keys)
-    elif key in square5_keys:
-        return SquareValues(board, square5_keys)
-    elif key in square6_keys:
-        return SquareValues(board, square6_keys)
-    elif key in square7_keys:
-        return SquareValues(board, square7_keys)
-    elif key in square8_keys:
-        return SquareValues(board, square8_keys)
-    elif key in square9_keys:
-        return SquareValues(board, square9_keys)
+def ReturnSquare(board, square_keys):
+    square = {k: v for k, v in board.items() if k in square_keys}
+    return list(square.values())
 
 def Backtrack(sudoku_board):
     domain_values = ['1','2','3','4','5','6','7','8','9']
