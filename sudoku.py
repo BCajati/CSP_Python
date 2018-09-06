@@ -60,6 +60,30 @@ def SquaresMeetConstraints(sudoku_board):
    values_square1 = ReturnSquare(sudoku_board, square1_keys)
    if Alldiff(values_square1) == False:
        return False
+   values_square2 = ReturnSquare(sudoku_board, square2_keys)
+   if Alldiff(values_square2) == False:
+       return False
+   values_square3 = ReturnSquare(sudoku_board, square3_keys)
+   if Alldiff(values_square3) == False:
+       return False
+   values_square4 = ReturnSquare(sudoku_board, square4_keys)
+   if Alldiff(values_square4) == False:
+       return False
+   values_square5 = ReturnSquare(sudoku_board, square5_keys)
+   if Alldiff(values_square5) == False:
+       return False
+   values_square6 = ReturnSquare(sudoku_board, square6_keys)
+   if Alldiff(values_square6) == False:
+       return False
+   values_square7 = ReturnSquare(sudoku_board, square7_keys)
+   if Alldiff(values_square7) == False:
+       return False
+   values_square8 = ReturnSquare(sudoku_board, square8_keys)
+   if Alldiff(values_square8) == False:
+       return False
+   values_square9 = ReturnSquare(sudoku_board, square9_keys)
+   if Alldiff(values_square9) == False:
+       return False
    return True
 
 #def PrintBoard(sudoku_board):
