@@ -117,6 +117,29 @@ def ReturnSquare(board, key):
 
 
 
+    **OLD Algorithm **
+
+    def Backtrack(sudoku_board):
+        domain_values = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
+        # find a zero to fill in
+        if (isComplete(sudoku_board)):
+            return sudoku_board
+        else:
+            empty_square = FindEmptySquares(sudoku_board)
+            row_list = ReturnRow(sudoku_board, empty_square[0])
+            col_list = ReturnColumn(sudoku_board, empty_square[1])
+            print(row_list)
+            found_number = 0
+            for number in domain_values:
+                if number not in row_list and number not in col_list:
+                    found_number = number
+                    break;
+            if found_number != 0:
+                sudoku_board[empty_square] = found_number
+            Backtrack(sudoku_board)
+
+
+
 
 
 

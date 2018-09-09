@@ -10,7 +10,7 @@ lecture_example_answer = '849521736257863914163749258325196487498357621716482395
 
 testCase1 = CreateSudokuBoard(lecture_example_answer)
 
-testCase2 = CreateSudokuBoard(bad_data_row1)
+testCase2 = CreateSudokuBoard(lecture_example_assignment)
 
 testCase3 = CreateSudokuBoard(bad_data_row2)
 
@@ -24,22 +24,5 @@ testCase4 = CreateSudokuBoard(bad_data_row3)
 #print('Row A')
 #PrintBoard(testCase1)
 
-if (MeetsAllContraints(testCase1)):
-    print(True)
-else:
-    print(False)
 
-if (MeetsAllContraints(testCase2)):
-    print(True)
-else:
-    print(False)
-
-if (MeetsAllContraints(testCase3)):
-    print(True)
-else:
-    print(False)
-
-if (MeetsAllContraints(testCase4)):
-    print(True)
-else:
-    print(False)
+Backtrack_Search(testCase2)

@@ -52,9 +52,9 @@ class SudokuBoardTestConstraints(unittest.TestCase):
         self.board = CreateSudokuBoard(bad_data_col1)
         self.assertEqual(False, MeetsAllContraints(self.board))
 
- #   def test_ConstraintsCol15ails(self):
-  #      self.board = CreateSudokuBoard(bad_data_col5)
-   #     self.assertEqual(False, MeetsAllContraints(self.board))
+#   def test_ConstraintsCol15ails(self):
+#      self.board = CreateSudokuBoard(bad_data_col5)
+#     self.assertEqual(False, MeetsAllContraints(self.board))
 
     def test_ConstraintsCol7Fails(self):
         self.board = CreateSudokuBoard(bad_data_col7)
@@ -68,8 +68,10 @@ class SudokuBoardTestConstraints(unittest.TestCase):
         self.board = CreateSudokuBoard(bad_data_sq1)
         self.assertEqual(False, SquaresMeetConstraints(self.board))
 
-
-
+    def test_FindAllEmptySquares(self):
+        self.board = CreateSudokuBoard(good_example_incomplete)
+        empty = FindAllEmptySquares(self.board)
+        self.assertEqual(5, len(empty))
 
 if __name__ == '__main__':
     unittest.main()

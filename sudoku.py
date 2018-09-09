@@ -1,6 +1,5 @@
 
-# TODO - Next add tests for constraints on columns, then boxes.
-# TODO - Need function to get all values from squares into a list
+
 
 
 #input = '167523849984176523325489671798315264642798135531642798476831952213957486859264317'
@@ -87,25 +86,35 @@ def SquaresMeetConstraints(sudoku_board):
    return True
 
 #def PrintBoard(sudoku_board):
- #   for key in sorted(sudoku_board.iteritems(), key=lambda (k,v): (v,k)):
+#    for key in sorted(sudoku_board.iteritems(), key=lambda (k,v): (v,k)):
 #        print ("%s %s" % (key, sudoku_board[key]))
 
-
+def PrintBoard(sudoku_board):
+   print("A:" + sudoku_board["A1"] + sudoku_board["A2"] + sudoku_board["A3"] + sudoku_board["A4"]+ sudoku_board["A5"]+sudoku_board["A6"]+sudoku_board["A7"]+sudoku_board["A8"]+sudoku_board["A9"])
+   print("B:" + sudoku_board["B1"] + sudoku_board["B2"] + sudoku_board["B3"] + sudoku_board["B4"]+ sudoku_board["B5"]+sudoku_board["B6"]+sudoku_board["B7"]+sudoku_board["B8"]+sudoku_board["B9"])
+   print("C:" + sudoku_board["C1"] + sudoku_board["C2"] + sudoku_board["C3"] + sudoku_board["C4"]+ sudoku_board["C5"]+sudoku_board["C6"]+sudoku_board["C7"]+sudoku_board["C8"]+sudoku_board["C9"])
+   print("D:" + sudoku_board["D1"] + sudoku_board["D2"] + sudoku_board["D3"] + sudoku_board["D4"]+ sudoku_board["D5"]+sudoku_board["D6"]+sudoku_board["D7"]+sudoku_board["D8"]+sudoku_board["D9"])
+   print("E:" + sudoku_board["E1"] + sudoku_board["E2"] + sudoku_board["E3"] + sudoku_board["E4"]+ sudoku_board["E5"]+sudoku_board["E6"]+sudoku_board["E7"]+sudoku_board["E8"]+sudoku_board["E9"])
+   print("F:" + sudoku_board["F1"] + sudoku_board["F2"] + sudoku_board["F3"] + sudoku_board["F4"]+ sudoku_board["F5"]+sudoku_board["F6"]+sudoku_board["F7"]+sudoku_board["F8"]+sudoku_board["F9"])
+   print("G:" + sudoku_board["G1"] + sudoku_board["G2"] + sudoku_board["G3"] + sudoku_board["G4"]+ sudoku_board["G5"]+sudoku_board["G6"]+sudoku_board["G7"]+sudoku_board["G8"]+sudoku_board["G9"])
+   print("H:" + sudoku_board["H1"] + sudoku_board["H2"] + sudoku_board["H3"] + sudoku_board["H4"]+ sudoku_board["H5"]+sudoku_board["H6"]+sudoku_board["H7"]+sudoku_board["H8"]+sudoku_board["H9"])
+   print("I:" + sudoku_board["I1"] + sudoku_board["I2"] + sudoku_board["I3"] + sudoku_board["I4"]+ sudoku_board["I5"]+sudoku_board["I6"]+sudoku_board["I7"]+sudoku_board["I8"]+sudoku_board["I9"])
+   print("---------------------")
 
 def AllSquaresCompleted(sudoku_board):
+    print("check Complete: ")
     if ('0' in sudoku_board.values()):
+        print("false")
         return False
-    return True
-
-def isComplete(sudoku_board):
-   # if (MeetsAllContraints(sudoku_board) == False):
-    #    return False
-    if (AllSquaresCompleted(sudoku_board) == False):
-        return False
+    print("true")
     return True
 
 def FindEmptySquares(board):
     return list(board.keys())[list(board.values()).index('0')]
+
+def FindAllEmptySquares(board):
+    squares = {k: v for k, v in board.items() if v.startswith('0')}
+    return list(squares.keys())
 
 def ReturnRow(board, char):
     row = {k: v for k, v in board.items() if k.startswith(char)}
@@ -119,24 +128,29 @@ def ReturnSquare(board, square_keys):
     square = {k: v for k, v in board.items() if k in square_keys}
     return list(square.values())
 
+def SelectUnassignedVariables(sudoku_board):
+    return "tbd"
+
+def Backtrack_Search(sudoku_board):
+    return Backtrack(sudoku_board)
+
 def Backtrack(sudoku_board):
     domain_values = ['1','2','3','4','5','6','7','8','9']
+    PrintBoard(sudoku_board)
     # find a zero to fill in
-    if (isComplete(sudoku_board)):
+    if (AllSquaresCompleted(sudoku_board)):
         return sudoku_board
-    else:
-        empty_square = FindEmptySquares(sudoku_board)
-        row_list = ReturnRow(sudoku_board, empty_square[0])
-        col_list = ReturnColumn(sudoku_board, empty_square[1])
-        print(row_list)
-        found_number = 0
-        for number in domain_values:
-            if number not in row_list and number not in col_list:
-                found_number = number
-                break;
-        if found_number != 0:
-            sudoku_board[empty_square] = found_number
-        Backtrack(sudoku_board)
+
+    empty_square = FindEmptySquares(sudoku_board)
+    for number in domain_values:
+        sudoku_board[empty_square] = number
+        if (MeetsAllContraints(sudoku_board)):
+            print("Add " + empty_square + ":" +  number)
+            result = Backtrack(sudoku_board)
+            if result != "failure":
+                return result
+            sudoku_board[empty_square] = 0
+    return "failure"
 
 #sudoku_board = CreateSudokuBoard(withZerosinput)
 #finished_board = Backtrack(sudoku_board)
