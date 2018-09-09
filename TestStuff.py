@@ -83,60 +83,20 @@ print(ReturnSquare(board2, "G3"))
 
 #print(FindEmptySquares(board2))
 
-def ReturnSquare(board, key):
-    if key in square1_keys:
-        return SquareValues(board, square1_keys)
-    elif key in square2_keys:
-        return SquareValues(board, square2_keys)
-    elif key in square3_keys:
-        return SquareValues(board, square3_keys)
-    elif key in square4_keys:
-        return SquareValues(board, square4_keys)
-    elif key in square5_keys:
-        return SquareValues(board, square5_keys)
-    elif key in square6_keys:
-        return SquareValues(board, square6_keys)
-    elif key in square7_keys:
-        return SquareValues(board, square7_keys)
-    elif key in square8_keys:
-        return SquareValues(board, square8_keys)
-    elif key in square9_keys:
-        return SquareValues(board, square9_keys)
 
-    def SquareValues(board, key_list):
-        value_list = []
-        for key in key_list:
-            value_list.append(board[key])
-        return value_list
+a = {'a' : 0, 'b' : 1}
+b = {'c' : 2}
+c = {}
 
-    def ReturnSquareValues(board, key_list):
-        value_list = []
-        for key in key_list:
-            value_list.append(board[key])
-        return value_list
+#a.update(b)
+
+a.update(c)
+print (a)
 
 
 
-    **OLD Algorithm **
 
-    def Backtrack(sudoku_board):
-        domain_values = ['1', '2', '3', '4', '5', '6', '7', '8', '9']
-        # find a zero to fill in
-        if (isComplete(sudoku_board)):
-            return sudoku_board
-        else:
-            empty_square = FindEmptySquares(sudoku_board)
-            row_list = ReturnRow(sudoku_board, empty_square[0])
-            col_list = ReturnColumn(sudoku_board, empty_square[1])
-            print(row_list)
-            found_number = 0
-            for number in domain_values:
-                if number not in row_list and number not in col_list:
-                    found_number = number
-                    break;
-            if found_number != 0:
-                sudoku_board[empty_square] = found_number
-            Backtrack(sudoku_board)
+
 
 
 

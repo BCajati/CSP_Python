@@ -1,4 +1,7 @@
-
+#TODO- trying to keep assignments separate from board - not sure if that is important
+# Not working = trying to get representation of board + assignments - returning None
+# Maybe test just that feature
+# also - review exact assignment - I may be missing something
 
 
 
@@ -40,19 +43,24 @@ def Alldiff(in_list):
           return False
     return True
 
-def MeetsAllContraints(sudoku_board):
+def AppendAssignment(temp_board, assignment):
+    return temp_board.update(assignment)
+
+
+def MeetsAllContraints(input_board, assignment):
+    temp_board = AppendAssignment(input_board, assignment)
     #check that all rows and all columns are different
     rows = 'ABCDEFGHI'
     for x in range (0,8):
-        rowy = ReturnRow(sudoku_board, rows[x])
+        rowy = ReturnRow(temp_board, rows[x])
         if Alldiff(rowy) == False:
             return False
     # now check all columns
     for z in range (1,9):
-        col1 = ReturnColumn(sudoku_board, str(z))
+        col1 = ReturnColumn(temp_board, str(z))
         if Alldiff(col1) == False:
             return False
-    return SquaresMeetConstraints(sudoku_board)
+    return SquaresMeetConstraints(temp_board)
 
 
 def SquaresMeetConstraints(sudoku_board):
@@ -101,18 +109,19 @@ def PrintBoard(sudoku_board):
    print("I:" + sudoku_board["I1"] + sudoku_board["I2"] + sudoku_board["I3"] + sudoku_board["I4"]+ sudoku_board["I5"]+sudoku_board["I6"]+sudoku_board["I7"]+sudoku_board["I8"]+sudoku_board["I9"])
    print("---------------------")
 
-def AllSquaresCompleted(sudoku_board):
-    print("check Complete: ")
-    if ('0' in sudoku_board.values()):
-        print("false")
+def AllSquaresCompleted(input_board, assignment):
+    #print("check Complete: ")
+    if ('0' in input_board.values()):
+       # print("false")
         return False
-    print("true")
+    print("Check Complete = true")
     return True
 
 def FindEmptySquares(board):
     return list(board.keys())[list(board.values()).index('0')]
 
-def FindAllEmptySquares(board):
+def FindAllEmptySquares(board, assignment):
+    temp_board = board.update(assignment)
     squares = {k: v for k, v in board.items() if v.startswith('0')}
     return list(squares.keys())
 
@@ -132,24 +141,32 @@ def SelectUnassignedVariables(sudoku_board):
     return "tbd"
 
 def Backtrack_Search(sudoku_board):
-    return Backtrack(sudoku_board)
+    assignment = {}
+    result =  Backtrack(assignment, sudoku_board)
+    if (result != "failure"):
+        PrintBoard(result)
+    else:
+        print("failure")
 
-def Backtrack(sudoku_board):
+def Backtrack(assignment, sudoku_board):
     domain_values = ['1','2','3','4','5','6','7','8','9']
-    PrintBoard(sudoku_board)
+  #  PrintBoard(sudoku_board)
     # find a zero to fill in
-    if (AllSquaresCompleted(sudoku_board)):
-        return sudoku_board
+   # if (AllSquaresCompleted(sudoku_board, assignment)):
+    #    return assignment
 
-    empty_square = FindEmptySquares(sudoku_board)
-    for number in domain_values:
-        sudoku_board[empty_square] = number
-        if (MeetsAllContraints(sudoku_board)):
-            print("Add " + empty_square + ":" +  number)
-            result = Backtrack(sudoku_board)
-            if result != "failure":
-                return result
-            sudoku_board[empty_square] = 0
+    empty_squares = FindAllEmptySquares(sudoku_board, assignment)
+    if (any(empty_squares) == False):
+        return assignment
+    for square in empty_squares:
+        for number in domain_values:
+            assignment[square] = number
+            if (MeetsAllContraints(sudoku_board, assignment)):
+                print("Add " + square + ":" +  number)
+                result = Backtrack(assignment, sudoku_board)
+                if result != "failure":
+                    return result
+                assignment[square] = 0
     return "failure"
 
 #sudoku_board = CreateSudokuBoard(withZerosinput)
