@@ -1,4 +1,6 @@
 
+# improved method to pick empty square
+# doesn't seem like back track recursion is working - must be missing something
 
 
 
@@ -102,15 +104,40 @@ def PrintBoard(sudoku_board):
    print("---------------------")
 
 def AllSquaresCompleted(sudoku_board):
-    print("check Complete: ")
+    #print("check Complete: ")
     if ('0' in sudoku_board.values()):
-        print("false")
+        #print("false")
         return False
-    print("true")
+    #print("true")
     return True
 
 def FindEmptySquares(board):
     return list(board.keys())[list(board.values()).index('0')]
+
+def FindLeastEmptySquares(sudoku_board):
+    if AllSquaresCompleted(sudoku_board):
+        return None
+    rows = 'ABCDEFGHI'
+    #least_zeros_row = 'A'
+    #least_zeros_col = 1
+    min_squares = []
+    least_zeros = 9
+    for x in range(0, 8):
+        rowy = ReturnRow(sudoku_board, rows[x])
+        count = rowy.count('0')
+        if count > 0 and count < least_zeros:
+            min_squares = ReturnEmptyRowKeys(sudoku_board, rows[x])
+            least_zeros = count
+           # if count < 3:
+               # return min_squares
+    # now check all columns
+    for z in range(1, 9):
+        col1 = ReturnColumn(sudoku_board, str(z))
+        count = col1.count('0')
+        if count > 0 and count < least_zeros:
+            min_squares = ReturnEmptyColumnKeys(sudoku_board, str(z))
+            least_zeros = count
+    return min_squares
 
 def FindAllEmptySquares(board):
     squares = {k: v for k, v in board.items() if v.startswith('0')}
@@ -120,9 +147,17 @@ def ReturnRow(board, char):
     row = {k: v for k, v in board.items() if k.startswith(char)}
     return list(row.values())
 
+def ReturnEmptyRowKeys(board, char):
+    row = {k: v for k, v in board.items() if k.startswith(char) and v.startswith('0')}
+    return list(row.keys())
+
 def ReturnColumn(board, num):
     col = {k: v for k, v in board.items() if k.endswith(num)}
     return list(col.values())
+
+def ReturnEmptyColumnKeys(board, num):
+    col = {k: v for k, v in board.items() if k.endswith(num) and v.startswith('0')}
+    return list(col.keys())
 
 def ReturnSquare(board, square_keys):
     square = {k: v for k, v in board.items() if k in square_keys}
@@ -141,15 +176,16 @@ def Backtrack(sudoku_board):
     if (AllSquaresCompleted(sudoku_board)):
         return sudoku_board
 
-    empty_square = FindEmptySquares(sudoku_board)
-    for number in domain_values:
-        sudoku_board[empty_square] = number
-        if (MeetsAllContraints(sudoku_board)):
-            print("Add " + empty_square + ":" +  number)
-            result = Backtrack(sudoku_board)
-            if result != "failure":
-                return result
-            sudoku_board[empty_square] = 0
+    empty_squares = FindLeastEmptySquares(sudoku_board)
+    for square in empty_squares:
+        for number in domain_values:
+            sudoku_board[square] = number
+            if (MeetsAllContraints(sudoku_board)):
+                print("Add " + square + ":" +  number)
+                result = Backtrack(sudoku_board)
+                if result != "failure":
+                    return result
+                sudoku_board[square] = 0
     return "failure"
 
 #sudoku_board = CreateSudokuBoard(withZerosinput)

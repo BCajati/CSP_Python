@@ -73,5 +73,11 @@ class SudokuBoardTestConstraints(unittest.TestCase):
         empty = FindAllEmptySquares(self.board)
         self.assertEqual(5, len(empty))
 
+    def test_FindLeastEmptySquares(self):
+        self.board = CreateSudokuBoard(good_example_incomplete)
+        least_empty =  FindLeastEmptySquares(self.board)
+        print(least_empty)
+        self.assertEqual(1, len(least_empty))
+
 if __name__ == '__main__':
     unittest.main()
